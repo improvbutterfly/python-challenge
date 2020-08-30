@@ -21,7 +21,8 @@ with open(budget_path) as budget_file:
 	    	total_months = total_months + 1
 
 	    # Calculate the net total amount of "Profit/Losses" over the entire period
-
+	    if row[1] != "Profit/Losses":
+	    	total_profit_loss = total_profit_loss + int(row[1])
 
 	    # Calculate the greatest increase in profits (date and amount) over the entire period
 
@@ -34,5 +35,7 @@ with open(budget_path) as budget_file:
     # Test total_months data
     print(f"Total months: {total_months}")
 
+    # Print total profit/loss
+    print(f"Total profit/loss: {total_profit_loss}")
     # Print data to text file
 
