@@ -16,6 +16,7 @@ with open(budget_path) as budget_file:
     total_profit_loss = 0
     greatest_increase = 0
     greatest_decrease = 0
+    total_change = 0
     previous_row = ["",0]
 
     for row in budget_reader:
@@ -39,11 +40,19 @@ with open(budget_path) as budget_file:
         	    greatest_increase_month = str(row[0])
 
     		# Calculate the greatest decrease in losses (date and amount) over the entire period
+	    	if greatest_decrease > monthly_increase_decrease:
+        	    greatest_decrease = monthly_increase_decrease
+        	    greatest_decrease_month = str(row[0])
 
 	    	# Save previous row so we can make comparison in the next iteration
 	    	previous_row = row
 
+	    	# Save total change
+	    	total_change = total_change + monthly_increase_decrease
+
     # Calculate the average changes in Profit/Losses over the entire period
+    average_change = total_change / (total_months - 1) # -1 to ignore first month because we don't have month to compare
+
     # This calculation isn't what I'm supposed to do
     average_profit_loss = total_profit_loss / total_months
 
@@ -56,10 +65,13 @@ with open(budget_path) as budget_file:
     print(f"Total: ${total_profit_loss}")
 
     # Print average changes
-    print(f"Average Change: ${average_profit_loss}")
+    print(f"Average Change: ${average_change}")
 
     # Print greatest increase in profits
     print(f"Greatest Increase in Profits: {greatest_increase_month} (${greatest_increase})")
+
+    # Print greatest decrease in profits
+    print(f"Greatest Decrease in Profits: {greatest_decrease_month} (${greatest_decrease})")
 
     # Print data to text file
 
