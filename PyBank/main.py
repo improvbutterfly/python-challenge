@@ -14,28 +14,51 @@ with open(budget_path) as budget_file:
     # Set initial variables to 0
     total_months = 0
     total_profit_loss = 0
+    greatest_increase = 0
+    greatest_decrease = 0
+    previous_row = ["",0]
 
     for row in budget_reader:
 	    # Calculate months included in the dataset
 	    if row[0] != "Date":
 	    	total_months = total_months + 1
 
-	    # Calculate the net total amount of "Profit/Losses" over the entire period
 	    if row[1] != "Profit/Losses":
+		    # Calculate the net total amount of "Profit/Losses" over the entire period
 	    	total_profit_loss = total_profit_loss + int(row[1])
 
-	    # Calculate the greatest increase in profits (date and amount) over the entire period
 
+	    	monthly_increase_decrease = int(row[1]) - int(previous_row[1])
+	    	# Test printing data
+	    	print(f"Monthly increase/decrease: {row[0]} {monthly_increase_decrease}")
+
+	    	# Save previous row so we can make comparison in the next iteration
+	    	previous_row = row
+
+			# Calculate the greatest increase in profits (date and amount) over the entire period
+			# The code below isn't the right calculation
+	    	#if greatest_increase > int(row[1]) & int(row[1]) > 0:
+        	#    greatest_increase = int(row[1])
+        	#    greatest_increase_month = str(row[0])
 
     	# Calculate the greatest decrease in losses (date and amount) over the entire period
 
+    # Calculate the average changes in Profit/Losses over the entire period
+    average_profit_loss = total_profit_loss / total_months
 
     # Print data to screen
 
-    # Test total_months data
-    print(f"Total months: {total_months}")
+    # Print total months
+    print(f"Total Months: {total_months}")
 
     # Print total profit/loss
-    print(f"Total profit/loss: {total_profit_loss}")
+    print(f"Total: ${total_profit_loss}")
+
+    # Print average changes
+    print(f"Average Change: ${average_profit_loss}")
+
+    # Print greatest increase in profits
+    #print(f"Greatest Increase in Profits: {greatest_increase_month} (${greatest_increase})")
+
     # Print data to text file
 
