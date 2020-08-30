@@ -17,6 +17,7 @@ with open(budget_path) as budget_file:
     greatest_increase = 0
     greatest_decrease = 0
     total_change = 0
+    opening_profit_loss = 0
     previous_row = ["",0]
 
     for row in budget_reader:
@@ -28,6 +29,12 @@ with open(budget_path) as budget_file:
 		    # Calculate the net total amount of "Profit/Losses" over the entire period
 	    	total_profit_loss = total_profit_loss + int(row[1])
 
+	    	# Check if first row to set opening profit/loss
+	    	if opening_profit_loss == 0:
+	    		opening_profit_loss = int(row[1])
+	    	else:
+	    		# Set closing profit/loss in case no next row
+	    		closing_profit_loss = int(row[1])
 
 	    	monthly_increase_decrease = int(row[1]) - int(previous_row[1])
 	    	# Test printing data
@@ -47,14 +54,9 @@ with open(budget_path) as budget_file:
 	    	# Save previous row so we can make comparison in the next iteration
 	    	previous_row = row
 
-	    	# Save total change
-	    	total_change = total_change + monthly_increase_decrease
 
     # Calculate the average changes in Profit/Losses over the entire period
-    average_change = total_change / (total_months - 1) # -1 to ignore first month because we don't have month to compare
-
-    # This calculation isn't what I'm supposed to do
-    average_profit_loss = total_profit_loss / total_months
+    average_change = (closing_profit_loss - opening_profit_loss) / (total_months - 1)
 
     # Print data to screen
 
