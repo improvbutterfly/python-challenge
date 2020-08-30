@@ -32,18 +32,19 @@ with open(budget_path) as budget_file:
 	    	# Test printing data
 	    	print(f"Monthly increase/decrease: {row[0]} {monthly_increase_decrease}")
 
+			# Calculate the greatest increase in profits (date and amount) over the entire period
+			# The code below isn't the right calculation
+	    	if greatest_increase < monthly_increase_decrease:
+        	    greatest_increase = monthly_increase_decrease
+        	    greatest_increase_month = str(row[0])
+
+    		# Calculate the greatest decrease in losses (date and amount) over the entire period
+
 	    	# Save previous row so we can make comparison in the next iteration
 	    	previous_row = row
 
-			# Calculate the greatest increase in profits (date and amount) over the entire period
-			# The code below isn't the right calculation
-	    	#if greatest_increase > int(row[1]) & int(row[1]) > 0:
-        	#    greatest_increase = int(row[1])
-        	#    greatest_increase_month = str(row[0])
-
-    	# Calculate the greatest decrease in losses (date and amount) over the entire period
-
     # Calculate the average changes in Profit/Losses over the entire period
+    # This calculation isn't what I'm supposed to do
     average_profit_loss = total_profit_loss / total_months
 
     # Print data to screen
@@ -58,7 +59,7 @@ with open(budget_path) as budget_file:
     print(f"Average Change: ${average_profit_loss}")
 
     # Print greatest increase in profits
-    #print(f"Greatest Increase in Profits: {greatest_increase_month} (${greatest_increase})")
+    print(f"Greatest Increase in Profits: {greatest_increase_month} (${greatest_increase})")
 
     # Print data to text file
 
