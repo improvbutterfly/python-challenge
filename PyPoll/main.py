@@ -53,4 +53,7 @@ print("----------------------------")
 
 # Print data from candidate dictionary
 for candidate, votes in candidates.items():
-	print(f"{candidate}: ({votes})")
+	# Calculate percentage of vote
+	vote_percentage = "{:.3f}".format(votes / total_votes * 100)
+
+	print(f"{candidate}: {vote_percentage}% ({votes})")
