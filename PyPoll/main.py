@@ -33,16 +33,15 @@ with open(election_path) as election_file:
 
 			# Check if candidate already exists in dictionary
 			if candidate in candidates:
-				votes = candidates[f"{candidate}"]
-				# Print out info for debugging
-				print(f"Votes for {candidate}: {votes}")
-				votes = votes + 1
-				print(f"Votes for {candidate}: {votes}\nNext candidate")
-				candidates = {f"{candidate}": votes}
-				print(f"{candidate}: {candidates[candidate]}")
+				# Add a new vote
+				votes = candidates[candidate] + 1
+
+				# Update key
+				update_candidate = {candidate: votes}
+				candidates.update(update_candidate)
 			# If candidate does not exist in dictionary, add them
 			else:
-				candidates = {candidate: 1}
+				candidates.update({candidate: 1})
 
 # Print election results
 print("Election Results")
