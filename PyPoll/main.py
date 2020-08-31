@@ -51,9 +51,21 @@ print("----------------------------")
 print(f"Total Votes: {total_votes}")
 print("----------------------------")
 
+# Initialize comparison vote counter
+most_votes = 0
+
 # Print data from candidate dictionary
 for candidate, votes in candidates.items():
 	# Calculate percentage of vote
 	vote_percentage = "{:.3f}".format(votes / total_votes * 100)
 
+	# Determine if candidate has more votes than previous candidate
+	if votes > most_votes:
+		most_votes = votes
+		winner = candidate
+
 	print(f"{candidate}: {vote_percentage}% ({votes})")
+
+print("----------------------------")
+print(f"Winner: {winner}")
+print("----------------------------")
