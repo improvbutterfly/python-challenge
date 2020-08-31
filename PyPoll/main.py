@@ -20,6 +20,9 @@ with open(election_path) as election_file:
 	# read the CSV file
 	election_reader = csv.reader(election_file, delimiter=',')
 
+	csv_header = next(election_reader)
+
+
 	#Initialize variables
 	total_votes = 0
 
@@ -28,20 +31,19 @@ with open(election_path) as election_file:
 		county = row[1]
 		candidate = row[2]
 
-		if voter_ID != "Voter ID":
-			total_votes = total_votes + 1
+		total_votes = total_votes + 1
 
-			# Check if candidate already exists in dictionary
-			if candidate in candidates:
-				# Add a new vote
-				votes = candidates[candidate] + 1
+		# Check if candidate already exists in dictionary
+		if candidate in candidates:
+			# Add a new vote
+			votes = candidates[candidate] + 1
 
-				# Update key
-				update_candidate = {candidate: votes}
-				candidates.update(update_candidate)
-			# If candidate does not exist in dictionary, add them
-			else:
-				candidates.update({candidate: 1})
+			# Update key
+			update_candidate = {candidate: votes}
+			candidates.update(update_candidate)
+		# If candidate does not exist in dictionary, add them
+		else:
+			candidates.update({candidate: 1})
 
 # Open file to write results
 write_file = open(election_results, 'w')
