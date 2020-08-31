@@ -10,7 +10,7 @@ import csv
 election_path = os.path.join('.', 'Resources', 'election_data.csv')
 
 # Path for output text file
-#election_results = os.path.join('.', 'analysis', 'election_results.txt')
+election_results = os.path.join('.', 'analysis', 'election_results.txt')
 
 # Create a dictionary to store the votes for each candidate
 candidates = {}
@@ -43,13 +43,22 @@ with open(election_path) as election_file:
 			else:
 				candidates.update({candidate: 1})
 
-# Print election results
+# Open file to write results
+write_file = open(election_results, 'w')
+
+# Print election results to screen and text file
 print("Election Results")
 print("----------------------------")
+
+write_file.write(f"Election Results\n")
+write_file.write(f"----------------------------\n")
 
 # Print total votes
 print(f"Total Votes: {total_votes}")
 print("----------------------------")
+
+write_file.write(f"Total Votes: {total_votes}\n")
+write_file.write(f"----------------------------\n")
 
 # Initialize comparison vote counter
 most_votes = 0
@@ -64,8 +73,21 @@ for candidate, votes in candidates.items():
 		most_votes = votes
 		winner = candidate
 
+	# Print candidate data to screen
 	print(f"{candidate}: {vote_percentage}% ({votes})")
 
+	# Print candidate data to text file
+	write_file.write(f"{candidate}: {vote_percentage}% ({votes})\n")
+
+# Print winner to screen
 print("----------------------------")
 print(f"Winner: {winner}")
 print("----------------------------")
+
+# Print winner to text file
+write_file.write(f"----------------------------\n")
+write_file.write(f"Winner: {winner}\n")
+write_file.write(f"----------------------------\n")
+
+# Close text file
+write_file.close()
