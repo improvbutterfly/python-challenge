@@ -31,6 +31,19 @@ with open(election_path) as election_file:
 		if voter_ID != "Voter ID":
 			total_votes = total_votes + 1
 
+			# Check if candidate already exists in dictionary
+			if candidate in candidates:
+				votes = candidates[f"{candidate}"]
+				# Print out info for debugging
+				print(f"Votes for {candidate}: {votes}")
+				votes = votes + 1
+				print(f"Votes for {candidate}: {votes}\nNext candidate")
+				candidates = {f"{candidate}": votes}
+				print(f"{candidate}: {candidates[candidate]}")
+			# If candidate does not exist in dictionary, add them
+			else:
+				candidates = {candidate: 1}
+
 # Print election results
 print("Election Results")
 print("----------------------------")
@@ -38,3 +51,7 @@ print("----------------------------")
 # Print total votes
 print(f"Total Votes: {total_votes}")
 print("----------------------------")
+
+# Print data from candidate dictionary
+for candidate, votes in candidates.items():
+	print(f"{candidate}: ({votes})")
