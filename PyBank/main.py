@@ -1,3 +1,6 @@
+# Program to read CSV with "date" and "Profit/Loss" data, analyse results, and output to screen and text file
+# Authored by Dominica Corless
+
 # import the os module to join the file paths across operating systems
 import os
 
