@@ -17,6 +17,9 @@ with open(budget_path) as budget_file:
 	# read the CSV file
     budget_reader = csv.reader(budget_file, delimiter=',')
 
+    # Store header info
+    csv_header = next(budget_reader)
+
     # Set initial variables to 0
     total_months = 0
     total_profit_loss = 0
@@ -28,38 +31,32 @@ with open(budget_path) as budget_file:
 
     for row in budget_reader:
 	    # Calculate months included in the dataset
-	    if row[0] != "Date":
-	    	total_months = total_months + 1
+	    total_months = total_months + 1
 
-	    if row[1] != "Profit/Losses":
-		    # Calculate the net total amount of "Profit/Losses" over the entire period
-	    	total_profit_loss = total_profit_loss + int(row[1])
+	    # Calculate the net total amount of "Profit/Losses" over the entire period
+	    total_profit_loss = total_profit_loss + int(row[1])
 
-	    	# Check if first row to set opening profit/loss
-	    	if opening_profit_loss == 0:
-	    		opening_profit_loss = int(row[1])
-	    	else:
-	    		# Set closing profit/loss in case no next row
-	    		closing_profit_loss = int(row[1])
+	    # Check if first row to set opening profit/loss
+	    if opening_profit_loss == 0:
+	    	opening_profit_loss = int(row[1])
+	    else:
+	    	# Set closing profit/loss in case no next row
+	    	closing_profit_loss = int(row[1])
 
-	    	monthly_increase_decrease = int(row[1]) - int(previous_row[1])
-	    	# Test printing data
-	    	#print(f"Monthly increase/decrease: {row[0]} {monthly_increase_decrease}")
+	    monthly_increase_decrease = int(row[1]) - int(previous_row[1])
+	    
+		# Calculate the greatest increase in profits (date and amount) over the entire period
+	    if greatest_increase < monthly_increase_decrease:
+	    	greatest_increase = monthly_increase_decrease
+	    	greatest_increase_month = str(row[0])
 
-			# Calculate the greatest increase in profits (date and amount) over the entire period
-			# The code below isn't the right calculation
-	    	if greatest_increase < monthly_increase_decrease:
-        	    greatest_increase = monthly_increase_decrease
-        	    greatest_increase_month = str(row[0])
+    	# Calculate the greatest decrease in losses (date and amount) over the entire period
+	    if greatest_decrease > monthly_increase_decrease:
+	    	greatest_decrease = monthly_increase_decrease
+	    	greatest_decrease_month = str(row[0])
 
-    		# Calculate the greatest decrease in losses (date and amount) over the entire period
-	    	if greatest_decrease > monthly_increase_decrease:
-        	    greatest_decrease = monthly_increase_decrease
-        	    greatest_decrease_month = str(row[0])
-
-	    	# Save previous row so we can make comparison in the next iteration
-	    	previous_row = row
-
+	    # Save previous row so we can make comparison in the next iteration
+	    previous_row = row
 
 # Calculate the average changes in Profit/Losses over the entire period
 average_change = (closing_profit_loss - opening_profit_loss) / (total_months - 1)
@@ -68,6 +65,8 @@ average_change = (closing_profit_loss - opening_profit_loss) / (total_months - 1
 formatted_average_change = "{:.2f}".format(average_change)
 
 # Print data to screen
+print("Financial Analysis")
+print("----------------------------")
 
 # Print total months
 print(f"Total Months: {total_months}")
@@ -85,8 +84,9 @@ print(f"Greatest Increase in Profits: {greatest_increase_month} (${greatest_incr
 print(f"Greatest Decrease in Profits: {greatest_decrease_month} (${greatest_decrease})")
 
 # Print data to text file
-
 write_file = open(output_data, 'w')
+write_file.write(f"Financial Analysis\n")
+write_file.write(f"----------------------------\n")
 write_file.write(f"Total Months: {total_months}\n")
 write_file.write(f"Total: ${total_profit_loss}\n")
 write_file.write(f"Average Change: ${formatted_average_change}\n")

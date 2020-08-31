@@ -20,13 +20,14 @@ with open(election_path) as election_file:
 	# read the CSV file
 	election_reader = csv.reader(election_file, delimiter=',')
 
+	# Store header info
 	csv_header = next(election_reader)
-
 
 	#Initialize variables
 	total_votes = 0
 
 	for row in election_reader:
+		# store data in row
 		voter_ID = row[0]
 		county = row[1]
 		candidate = row[2]
